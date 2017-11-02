@@ -95,6 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\ParkingLotManager.cs" />
+    <Compile Include="Classes\ParkingLot.cs" />
+    <Compile Include="Classes\Space.cs" />
+    <Compile Include="Classes\Vehicle.cs" />
+    <Compile Include="Interfaces\LotInterface.cs" />
+    <Compile Include="Interfaces\SpaceInterface.cs" />
+    <Compile Include="Interfaces\VehicleInterface.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
