@@ -16,17 +16,8 @@ namespace ParkingLot.Interfaces
     }
     interface SpaceInterface
     {
-        Space getLeft();
-        Space getRight();
-        SpaceSize getSize();
-        int Number();
-        int Row();
-        bool isTaken();
-        bool hasRight();
-        bool hasLeft();
-        void takeSpace(VehicleInterface v);
-        VehicleInterface vehicleInSpace();
-        string Print();
-        
+        void TakeSpace(VehicleInterface v);
+        void LeaveSpace();
+       
     }
 }

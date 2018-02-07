@@ -14,6 +14,6 @@ namespace ParkingLot.Interfaces
     }
    public interface VehicleInterface
     {
-        VehicleType getType();
+        double CalculateCost(int rate); 
     }
 }

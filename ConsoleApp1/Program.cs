@@ -11,8 +11,9 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            ParkingLotManager PLM = new ParkingLotManager();
-            PLM.RunParkingLot();
+            ParkingLotManager PLM = new ParkingLotManager(4,55);
+          PLM.printLot();
+            
         }
     }
 }

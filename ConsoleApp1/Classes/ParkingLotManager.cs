@@ -8,58 +8,83 @@ using ParkingLot.Classes;
 
 namespace ParkingLot.Classes
 {
-    class ParkingLotManager
+    public class ParkingLotManager
     {
-        public void RunParkingLot()
+        ParkingLot lot;
+        int rowLength, numberofRows;
+        int numberSpaces, numberMotor, numberCompact, numberLarge;
+
+        public ParkingLotManager(int lengthofRow,int spaces)
         {
-            ParkingLot lot = new ParkingLot();
-            Space a = new Space( 0, 1, SpaceSize.COMPACT);
-            Space b = new Space(0, 2, SpaceSize.COMPACT);
-            Space c = new Space(0, 3, SpaceSize.COMPACT);
+            rowLength = lengthofRow;
+            numberSpaces = spaces;
+           
+            lot = new ParkingLot();
+            LoadLot();
+        }
 
-            a.setRight(b);
-            b.setRight(c);
-            c.setRight(new NullSpace());
-
-            a.setLeft(new NullSpace());
-            b.setLeft(a);
-            c.setLeft(b);
-            Space aa = new Space(1, 1, SpaceSize.COMPACT);
-            Space bb = new Space(1, 2, SpaceSize.COMPACT);
-            Space cc = new Space(1, 3, SpaceSize.COMPACT);
-
-            aa.setRight(bb);
-            bb.setRight(cc);
-            cc.setRight(new NullSpace());
-
-            aa.setLeft(new NullSpace());
-            bb.setLeft(aa);
-            cc.setLeft(bb);
-
-            Space aaa = new Space(2, 1, SpaceSize.COMPACT);
-            Space bbb = new Space(2, 2, SpaceSize.COMPACT);
-            Space ccc = new Space(2, 3, SpaceSize.COMPACT);
-
-            aaa.setRight(bbb);
-            bbb.setRight(ccc);
-            ccc.setRight(new NullSpace());
-
-            aaa.setLeft(new NullSpace());
-            bbb.setLeft(aaa);
-            ccc.setLeft(bbb);
-
-            List<SpaceInterface> newSpaces = new List<SpaceInterface> {a,b,c,aa,bb,cc,aaa,bbb,ccc};
-
-            foreach(SpaceInterface s in newSpaces)
+        public void LoadLot()
+        {
+            numberMotor = (int)(numberSpaces * .10);
+            numberCompact = numberSpaces % 2 == 0 ? (numberSpaces / 2) :  (int)(numberSpaces / 2 + .5);
+            numberLarge = numberSpaces - numberMotor - numberCompact;
+            if (numberLarge + numberCompact + numberMotor != numberSpaces)
             {
+                System.Console.Write("An Error Occured When Created Spaces. The Wrong Number Of Spaces Was Calculated. Parking Lot Will Be Empty");
 
-                if (s.getLeft() is NullSpace) { System.Console.Write(Environment.NewLine); }
-                System.Console.Write(s.getLeft().Print());
-                     System.Console.Write(s.Print());
-                System.Console.Write(s.getRight().Print());
-                if (s.getRight() is NullSpace) { System.Console.Write(Environment.NewLine); }
+            }
+            else
+            {
+                if (rowLength <= 0 || numberSpaces <= 0)
+                {
+                    numberofRows = 0;
+                }
+                else
+                {
+                    numberofRows = numberSpaces % rowLength == 0 ? (int)numberSpaces / rowLength : (int)(numberSpaces / rowLength + .5);
+                }
+                int motors = numberMotor;
+                int compact = numberCompact;
+                int largespaces = numberLarge;
+
+
+                for (int i = 0; i < numberofRows; i++)
+                {
+                    for (int t = 0; t < rowLength; t++)
+                    {
+                        if (motors > 0)
+                        {
+                            lot.addSpace(this.newMotorSpace(i, t));
+                            motors--;
+                        }
+                        else if (compact > 0)
+                        {
+                            lot.addSpace(this.newCompactSpace(i, t));
+                            compact--;
+                        }
+                        else
+                        {
+                            if (largespaces > 0)
+                            {
+                                lot.addSpace(this.newLargeSpace(i, t));
+                                largespaces--;
+                            }
+                        }
+
+                    }
+                    lot.addSpace(new NullSpace());
+
+                }
             }
 
         }
+
+        public void printLot() => lot.Print();
+        
+       
+        public Space newMotorSpace(int row, int number) => new Space(row, number, SpaceSize.MOTOR_SIZE);
+        public Space newCompactSpace(int row, int number) => new Space(row, number, SpaceSize.COMPACT);
+        public Space newLargeSpace(int row, int number) => new Space(row, number, SpaceSize.LARGE);
+
     }
 }

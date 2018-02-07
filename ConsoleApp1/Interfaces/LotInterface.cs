@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ParkingLot.Interfaces;
+using ParkingLot.Classes;
 
 namespace ParkingLot.Interfaces
 {
-    interface LotInterface
+    public interface LotInterface
     {
-        string Print();
-        void addSpace(SpaceInterface s);
+        string Park(int space, Vehicle vehicle);
+        string Leave(int space, Vehicle vehicle);
+        
 
     }
 }

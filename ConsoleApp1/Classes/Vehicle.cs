@@ -10,12 +10,23 @@ namespace ParkingLot.Classes
     public class Vehicle : VehicleInterface
     {
        
-        VehicleType type;
-        public Vehicle(VehicleType vType)
+       public Vehicle(VehicleType vType)
         {
-            this.type = vType;
+            this.TypeofVehicle = vType;
         }
 
-        public VehicleType getType() => this.type;
+        public VehicleType TypeofVehicle { get; set; }
+
+        public DateTime ParkStart { get; set; }
+
+        public DateTime ParkEnd { get; set; }
+
+        public double Cost { get; set; }
+
+        public double CalculateCost(int rate) => ParkEnd.Subtract(ParkStart).TotalHours * rate;
+        
+           
+        
+
     }
 }
