@@ -11,10 +11,10 @@ namespace ParkingLot.Interfaces
     {
         MOTOR_SIZE = 0,
         COMPACT = 1,
-        LARGE = 2,
-        NULL = 3
+        LARGE = 2
+        
     }
-    interface SpaceInterface
+    interface SpaceInterface : IDisposable
     {
         void TakeSpace(VehicleInterface v);
         void LeaveSpace();

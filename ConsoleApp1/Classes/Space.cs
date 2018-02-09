@@ -45,6 +45,13 @@ namespace ParkingLot.Classes
         {
             return "This Space is On Row: " + Row + " and has Space Number: " + Number + " has a Taken Status of " + Taken.ToString();
         }
+
+        public void Dispose()
+        {
+            this.Taken = false;
+            this.Vehicle = null;
+
+        }
         
     }
 }

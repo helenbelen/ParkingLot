@@ -79,7 +79,7 @@ namespace ParkingLot.Classes
             if (IsAvailable(space, vehicle))
             {
                 lotSpaces[space].TakeSpace(vehicle);
-                return lotSpaces[space].ToString() + "Please remember the space number."
+                return lotSpaces[space].ToString() + "Please remember the space number.";
             }
             return "This space is either full or not avaialable for your vehicle type. Choose another space";
         }

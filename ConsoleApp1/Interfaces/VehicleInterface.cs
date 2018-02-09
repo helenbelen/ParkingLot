@@ -10,9 +10,10 @@ namespace ParkingLot.Interfaces
     {
         MOTORCYCLE = 0,
         CAR = 1,
-        BUS = 2
+        BUS = 2,
+        NULL = 3
     }
-   public interface VehicleInterface
+   public interface VehicleInterface : IDisposable
     {
         double CalculateCost(int rate); 
     }

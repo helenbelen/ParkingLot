@@ -25,7 +25,10 @@ namespace ParkingLot.Classes
 
         public double CalculateCost(int rate) => ParkEnd.Subtract(ParkStart).TotalHours * rate;
         
-           
+        public void Dispose(){
+
+            this.TypeofVehicle = VehicleType.NULL;
+        }
         
 
     }
