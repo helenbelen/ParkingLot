@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ParkingLot.cs" />
+    <Compile Include="Classes\Lot.cs" />
     <Compile Include="Classes\Space.cs" />
     <Compile Include="Classes\Vehicle.cs" />
     <Compile Include="Interfaces\LotInterface.cs" />

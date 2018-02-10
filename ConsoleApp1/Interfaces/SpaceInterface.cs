@@ -16,7 +16,7 @@ namespace ParkingLot.Interfaces
     }
     interface SpaceInterface : IDisposable
     {
-        void TakeSpace(VehicleInterface v);
+        void TakeSpace(Vehicle v);
         void LeaveSpace();
        
     }

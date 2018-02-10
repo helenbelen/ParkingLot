@@ -21,6 +21,7 @@ namespace TestProject
         {
             Random r = new Random();
             int rate = r.Next(1, 10);
+            TestSetUp();
             using (vehicle)
             {
                 double expected = rate * vehicle.ParkEnd.Subtract(vehicle.ParkStart).TotalHours;

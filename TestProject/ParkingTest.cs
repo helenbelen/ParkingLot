@@ -92,7 +92,7 @@ namespace TestProject
             Random r = new Random();
             int row = r.Next(1, 10);
             int space = r.Next(10, 20);
-            int size = r.Next(-1, 3);
+            int size = r.Next(0, 3);
 
             return new int[] { row, space, size };
 

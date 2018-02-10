@@ -8,7 +8,7 @@ using ParkingLot.Classes;
 
 namespace ParkingLot.Interfaces
 {
-    public interface LotInterface
+    public interface LotInterface: IDisposable
     {
         string Park(int space, Vehicle vehicle);
         string Leave(int space, Vehicle vehicle);

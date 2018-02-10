@@ -27,9 +27,9 @@ namespace ParkingLot.Classes
 
         public bool Taken { get; set; }
 
-        public VehicleInterface Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; }
 
-        public void TakeSpace(VehicleInterface vehicle)
+        public void TakeSpace(Vehicle vehicle)
         {
             Vehicle = vehicle;
             Taken = true;

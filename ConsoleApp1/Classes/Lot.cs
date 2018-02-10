@@ -9,42 +9,41 @@ namespace ParkingLot.Classes
 {
     public struct LotInitializer {
 
-        public LotInitializer(int spaces, int rows, int compact, int large, int motor)
+        public LotInitializer(int spaces, int rows)
         {
             Spaces = spaces;
             Rows = rows;
-            CompactSpaces = compact;
-            LargeSpaces = large;
-            MotorSpaces = motor;
+            CompactSpaces = spaces % 2 == 0 ? spaces/2 : (int)spaces/2 + 1;
+            LargeSpaces = CompactSpaces %2 == 0? CompactSpaces/2 : (int)CompactSpaces/2 + 1;
+            MotorSpaces = Spaces - (CompactSpaces + LargeSpaces);
         }
         public int Spaces { get; set; }
         public int CompactSpaces { get; set; }
         public int LargeSpaces { get; set; }
         public int MotorSpaces { get; set; }
         public int Rows { get; set; }
-        public int SpacesPerRow() => Spaces%Rows == 0 ? Spaces/Rows : Spaces/Rows + 1;
-        
-        
-
+        public int SpacesPerRow() => Spaces%Rows == 0 ? Spaces/Rows : (int)Spaces/Rows + 1;
+      
     }
 
-    class ParkingLot : LotInterface
+    public class Lot : LotInterface
     {
         Dictionary<int, Space> lotSpaces;
         LotInitializer lotInitializer;
-        public ParkingLot(int rate,int numberofSpaces, int numberOfRows, int numberofCompact = 0, int numberofLarge = 0, int numberofMotor =0)
+        public Lot(int rate,int numberofSpaces, int numberOfRows)
         {
             Rate = rate; 
             Spaces = numberofSpaces;
-            Rows = numberOfRows;
-            EmptyLargeSpaces = numberofLarge;
-            EmptyCompactSpaces = numberofCompact;
-            EmptyMotorSpaces = numberofMotor;
             
-
             
             lotSpaces = new Dictionary<int, Space>();
-            lotInitializer = new LotInitializer(numberofSpaces, numberOfRows, numberofCompact,numberofLarge,numberofMotor);
+            lotInitializer = new LotInitializer(numberofSpaces, numberOfRows);
+            Rows = lotInitializer.Rows;
+            EmptySpaces = lotInitializer.Spaces;
+            EmptyLargeSpaces = lotInitializer.LargeSpaces;
+            EmptyCompactSpaces = lotInitializer.CompactSpaces;
+            EmptyMotorSpaces = lotInitializer.MotorSpaces;
+
             int rowStart = 0;
             for(int i = 0 ; i < lotInitializer.Rows; i++)
             {
@@ -54,17 +53,17 @@ namespace ParkingLot.Classes
                     if (lotInitializer.CompactSpaces > 0)
                     {
                         lotSpaces.Add(j, new Space(i, j, SpaceSize.COMPACT));
-                        lotInitializer.CompactSpaces -= lotInitializer.CompactSpaces;
+                        lotInitializer.CompactSpaces--;
                     }
                     else if (lotInitializer.LargeSpaces > 0)
                     {
                         lotSpaces.Add(j, new Space(i, j, SpaceSize.LARGE));
-                        lotInitializer.LargeSpaces -= lotInitializer.CompactSpaces;
+                        lotInitializer.LargeSpaces--;
                     }
                     else
                     {
                         lotSpaces.Add(j, new Space(i, j, SpaceSize.MOTOR_SIZE));
-                        lotInitializer.MotorSpaces -= lotInitializer.MotorSpaces;
+                        lotInitializer.MotorSpaces--;
                     }
                 }
 
@@ -79,6 +78,8 @@ namespace ParkingLot.Classes
             if (IsAvailable(space, vehicle))
             {
                 lotSpaces[space].TakeSpace(vehicle);
+                GetEmtpy(lotSpaces[space].Size);
+                vehicle.ParkStart = DateTime.Now;
                 return lotSpaces[space].ToString() + "Please remember the space number.";
             }
             return "This space is either full or not avaialable for your vehicle type. Choose another space";
@@ -88,6 +89,7 @@ namespace ParkingLot.Classes
         {
             if (!IsAvailable(space, vehicle))
             {
+                vehicle.ParkEnd = DateTime.Now;
                 double cost = lotSpaces[space].Vehicle.CalculateCost(Rate);
                 lotSpaces[space].LeaveSpace();
                 return lotSpaces[space].ToString() + "You owe $" + cost;
@@ -102,6 +104,8 @@ namespace ParkingLot.Classes
         public int EmptyLargeSpaces { get; set; }
         public int EmptyMotorSpaces { get; set; }
         public int Rows { get; set; }
+        public Dictionary<int,Space> AllSpaces { get { return lotSpaces; } }
+
 
 
         public bool IsAvailable(int space, Vehicle vehicle)
@@ -153,6 +157,12 @@ namespace ParkingLot.Classes
             }
 
 
+        }
+
+        public void Dispose()
+        {
+            lotSpaces.Clear();
+           
         }
         
     }
