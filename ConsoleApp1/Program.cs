@@ -11,8 +11,11 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            //ParkingLotManager PLM = new ParkingLotManager(4,55);
-          //PLM.printLot();
+            Lot parkingLot = new Lot(20, 50, 10); 
+            string input = "";
+            System.Console.WriteLine(parkingLot.ToString());
+            System.Console.WriteLine(" ");
+            Console.ReadLine();
             
         }
     }

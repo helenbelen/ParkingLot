@@ -85,51 +85,48 @@ namespace TestProject
         public void LotParking_CorrectEmptyCompactSpaces()
         {
             ParkVehicles();
-            int expectedEmptyCompact = 0;
+            int expectFilledCompact = 0;
             foreach(KeyValuePair<int,Space> pair in parkingLot.AllSpaces)
             {
-                if(pair.Value.Taken == true & pair.Value.Vehicle.TypeofVehicle == VehicleType.CAR)
+                if(pair.Value.Taken == true && pair.Value.Vehicle.TypeofVehicle == VehicleType.CAR)
                 {
-                    expectedEmptyCompact++;
+                    expectFilledCompact++;
                 }
             }
-           
-          
-            Assert.AreEqual(expectedEmptyCompact, parkingLot.EmptyCompactSpaces, "The number of empty compact spaces is not being update properly with vehicles park");
+                     
+            Assert.AreEqual(parkingLot.TotalCompactSpaces -expectFilledCompact, parkingLot.EmptyCompactSpaces, "The number of empty compact spaces is not being update properly with vehicles park");
         }
 
         [TestMethod]
         public void LotParking_CorrectEmptyLargeSpaces()
         {
             ParkVehicles();
-
             int expectedFilledLarge = 0;
-            foreach (Space s in filledSpaces)
+            foreach (KeyValuePair<int, Space> pair in parkingLot.AllSpaces)
             {
-                if (s.Vehicle.TypeofVehicle == VehicleType.BUS)
+                if (pair.Value.Taken == true && pair.Value.Vehicle.TypeofVehicle == VehicleType.BUS)
                 {
                     expectedFilledLarge++;
                 }
             }
-            int emptyLarge = parkingLot.Spaces - expectedFilledLarge;
-            Assert.AreEqual(emptyLarge, parkingLot.EmptyLargeSpaces, "The number of empty large spaces is not being update properly with vehicles park");
+
+            Assert.AreEqual(parkingLot.TotalLargeSpaces - expectedFilledLarge, parkingLot.EmptyLargeSpaces, "The number of empty compact spaces is not being update properly with vehicles park");
         }
 
         [TestMethod]
         public void LotParking_CorrectEmptyMotorSpaces()
         {
             ParkVehicles();
-
             int expectedFilledMotor = 0;
-            foreach (Space s in filledSpaces)
+            foreach (KeyValuePair<int, Space> pair in parkingLot.AllSpaces)
             {
-                if (s.Vehicle.TypeofVehicle == VehicleType.BUS)
+                if (pair.Value.Taken == true && pair.Value.Vehicle.TypeofVehicle == VehicleType.MOTORCYCLE)
                 {
                     expectedFilledMotor++;
                 }
             }
-            int emptyMotor = parkingLot.Spaces - expectedFilledMotor;
-            Assert.AreEqual(emptyMotor, parkingLot.EmptyMotorSpaces, "The number of empty large spaces is not being update properly with vehicles park");
+
+            Assert.AreEqual(parkingLot.TotalMotorSpaces - expectedFilledMotor, parkingLot.EmptyMotorSpaces, "The number of empty compact spaces is not being update properly with vehicles park");
 
         }
     }

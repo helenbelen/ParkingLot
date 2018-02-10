@@ -43,6 +43,10 @@ namespace ParkingLot.Classes
             EmptyLargeSpaces = lotInitializer.LargeSpaces;
             EmptyCompactSpaces = lotInitializer.CompactSpaces;
             EmptyMotorSpaces = lotInitializer.MotorSpaces;
+            TotalCompactSpaces = lotInitializer.CompactSpaces;
+            TotalLargeSpaces = lotInitializer.LargeSpaces;
+            TotalMotorSpaces = lotInitializer.MotorSpaces;
+
 
             int rowStart = 0;
             for(int i = 0 ; i < lotInitializer.Rows; i++)
@@ -103,6 +107,9 @@ namespace ParkingLot.Classes
         public int EmptyCompactSpaces { get; set; }
         public int EmptyLargeSpaces { get; set; }
         public int EmptyMotorSpaces { get; set; }
+        public int TotalCompactSpaces { get; set; }
+        public int TotalLargeSpaces { get; set; }
+        public int TotalMotorSpaces { get; set; }
         public int Rows { get; set; }
         public Dictionary<int,Space> AllSpaces { get { return lotSpaces; } }
 
@@ -157,6 +164,16 @@ namespace ParkingLot.Classes
             }
 
 
+        }
+
+        public override string ToString()
+        {
+            string output = "";
+            foreach(KeyValuePair<int,Space> pair in lotSpaces)
+            {
+                output = output + pair.Value.ToString() + System.Environment.NewLine;
+            }
+            return output;
         }
 
         public void Dispose()
